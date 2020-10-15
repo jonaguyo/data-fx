@@ -1,0 +1,134 @@
+#editor {
+	-fx-font-size: 11;
+	-fx-font-family: Tahoma;
+	-fx-text-fill: rgb(208, 208, 208);
+	-fx-border-radius: 0;
+}
+
+#editor .title {
+	-fx-border-color: rgb(208, 208, 208) transparent transparent transparent;
+	-fx-background-color: rgb(56, 56, 56);
+	-fx-background-radius: 0;
+}
+
+#editor .arrow {
+    -fx-background-color: rgb(208, 208, 208);
+}
+
+#editor .title .text {
+	-fx-font-weight: bold;
+}
+
+#editor .content {
+	-fx-padding: 0 -1 -1 -1;
+}
+
+#editor-container {
+	-fx-vgap: 3;
+	-fx-hgap: 30;
+	-fx-background-color: rgb(56, 56, 56);
+}
+
+#editor-label {
+	-fx-text-fill: rgb(208, 208, 208);
+}
+
+#editor-text-field {
+	-fx-effect: innershadow(one-pass-box, rgb(47, 47, 47), 1, 1, 1, 1);
+	-fx-padding: 1 3 1 3;
+	-fx-text-fill: rgb(208, 208, 208);
+	-fx-border-radius: 0;
+	-fx-border-color: rgb(47, 47, 47);
+	-fx-background-radius: 0;
+	-fx-background-color: rgb(65, 65, 65);
+}
+
+#editor-combo-box {
+	-fx-padding: -3;
+	-fx-border-radius: 3;
+	-fx-border-color: linear-gradient(from 0% 0% to 0% 100%, rgb(128, 128, 128), rgb(68, 68, 68));
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(91, 91, 91), rgb(61, 61, 61));
+}
+
+#editor-combo-box .arrow {
+    -fx-background-color: rgb(208, 208, 208);
+}
+
+#editor-combo-box .list-cell {
+	-fx-text-fill: rgb(208, 208, 208);
+}
+
+#editor-combo-box .combo-box-popup .list-view {
+	-fx-background-radius: 3;
+	-fx-border-color: transparent;
+	-fx-background-color: transparent;
+}
+
+#editor-combo-box .combo-box-popup .list-view .list-cell {
+	-fx-background-color: rgb(61, 61, 61);
+}
+
+#editor-combo-box .combo-box-popup .list-view .list-cell:hover {
+	-fx-background-color: rgb(91, 91, 91);
+}
+
+#editor-spinner {
+	-fx-background-color: transparent;
+}
+
+#editor-spinner .text-field {
+	-fx-effect: innershadow(one-pass-box, rgb(47, 47, 47), 1, 1, 1, 1);
+	-fx-padding: 1 3 1 3;
+	-fx-text-fill: rgb(208, 208, 208);
+	-fx-border-radius: 0;
+	-fx-border-color: rgb(47, 47, 47) transparent rgb(47, 47, 47) rgb(47, 47, 47);
+	-fx-background-radius: 0;
+	-fx-background-color: rgb(65, 65, 65);
+}
+
+#editor-spinner .increment-arrow-button {
+	-fx-border-color: rgb(47, 47, 47) rgb(47, 47, 47) transparent transparent;
+	-fx-background-color: rgb(65, 65, 65);
+}
+
+#editor-spinner .increment-arrow-button:hover {
+	-fx-background-color: rgb(91, 91, 91);
+}
+
+#editor-spinner .increment-arrow-button .increment-arrow {
+	-fx-background-color: rgb(208, 208, 208);
+}
+
+#editor-spinner .decrement-arrow-button {
+	-fx-border-color: transparent rgb(47, 47, 47) rgb(47, 47, 47) transparent;
+	-fx-background-color: rgb(65, 65, 65);
+}
+
+#editor-spinner .decrement-arrow-button:hover {
+	-fx-background-color: rgb(91, 91, 91);
+}
+
+#editor-spinner .decrement-arrow-button .decrement-arrow {
+	-fx-background-color: rgb(208, 208, 208);
+}
+
+#editor-slider .track {
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(40, 40, 40), rgb(75, 75, 75));
+}
+
+#editor-slider .thumb {
+	-fx-border-radius: 11;
+	-fx-border-color: linear-gradient(from 0% 0% to 0% 100%, rgb(142, 142, 142), rgb(76, 76, 76));
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(97, 97, 97), rgb(67, 67, 67));
+}
+
+#editor-check-box .box {
+	-fx-padding: 0;
+	-fx-border-radius: 3;
+	-fx-border-color: linear-gradient(from 0% 0% to 0% 100%, rgb(128, 128, 128), rgb(68, 68, 68));
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgb(91, 91, 91), rgb(61, 61, 61));
+}
+
+#editor-check-box:selected .box .mark {
+	-fx-background-color: rgb(208, 208, 208);
+}
