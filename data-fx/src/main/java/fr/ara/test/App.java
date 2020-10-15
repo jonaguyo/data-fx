@@ -1,5 +1,6 @@
 package fr.ara.test;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import fr.ara.annotations.RangeEditor;
@@ -7,6 +8,9 @@ import fr.ara.editors.EditorKey;
 import fr.ara.editors.EditorView;
 import fr.ara.reflection.DataFX;
 import javafx.application.Application;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -17,21 +21,33 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		DataFX.init("fr.ara");
-
-		EditorKey key1 = new EditorKey(Integer.class, RangeEditor.class);
-		EditorKey key2 = new EditorKey(Integer.class, RangeEditor.class);
-
-		System.out.println(key1.hashCode() + " " + key2.hashCode());
-		System.out.println(key1.equals(key2));
+		SimpleIntegerProperty intValueProperty = null;
+		if(intValueProperty == null) {
+			intValueProperty = new javafx.beans.property.SimpleIntegerProperty();
+			System.out.println("property constructed " + System.identityHashCode(intValueProperty));
+			intValueProperty.addListener((obs, o, n) -> {
+				
+			});
+		}
 
 		DataTest data = new DataTest();
 //		SimpleIntegerProperty i;
 //		System.out.println(Arrays.toString(data.getClass().getDeclaredFields()));
-//		Field f = data.getClass().getDeclaredField("intValueProperty");
-		
-//		f.getType().getMethod("set", int.class).invoke(f.get(data), 20);
+		Field f = data.getClass().getDeclaredField("intValueProperty");
+		SimpleIntegerProperty prop = (SimpleIntegerProperty) f.get(data);
+		System.out.println("hashcode = " + System.identityHashCode(prop));
+		prop.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		System.out.println(prop + " " + data.getIntValue());
 		data.setIntValue(10);
-		data.setRangeValue(3);
+		System.out.println(prop + " " + data.getIntValue());
+		prop.set(20);
+		System.out.println(prop + " " + data.getIntValue());
 		
 		System.out.println(Arrays.toString(data.getClass().getDeclaredFields()));
 		

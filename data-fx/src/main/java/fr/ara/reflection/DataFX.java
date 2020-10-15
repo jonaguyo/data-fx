@@ -14,8 +14,10 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.ara.annotations.Editor;
+import javafx.beans.value.ObservableValue;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtField;
 import javassist.CtMethod;
 
@@ -30,6 +32,23 @@ public class DataFX {
 	private static final String SIMPLE_FLOAT_PROPERTY = "javafx.beans.property.SimpleFloatProperty";
 	private static final String SIMPLE_DOUBLE_PROPERTY = "javafx.beans.property.SimpleDoubleProperty";
 	private static final String SIMPLE_STRING_PROPERTY = "javafx.beans.property.SimpleStringProperty";
+	
+	private static final String INIT_PROPERTY = // $1 = Property name, $2 = Property class, $3 = Value name
+			"{\n" +
+			"	if(%1$s == null) {\n" +
+			"		%1$s = new %2$s();\n" +
+			"		System.out.println(\"property constructed \" + System.identityHashCode(%1$s));\n" +
+//			"		%1$s.addListener(new javafx.beans.value.ChangeListener<Number>() {\n" +
+//			"			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {\n" +
+//			"			}\n" +
+//			"		});\n" +
+			"		%1$s.addListener((obs, o, n) -> {\n" +
+//			"			System.out.println(\"change to \" + n);\n" +
+//			"			%3$s = n;\n" +
+			"		});\n" +
+			"	}\n" +
+//			"	System.out.println(System.identityHashCode(%1$s));\n" +
+			"}";
 	
 	private static Map<String, String> propertiesClassNames = new HashMap<>();
 	
@@ -90,9 +109,16 @@ public class DataFX {
 							// Add a property field corresponding to the current editable field
 							CtClass propertyClass = pool.get(propertyClassName);
 							String fieldPropertyName = String.format("%sProperty", fieldName);
-							String fieldConstructor = String.format("new %s()", propertyClassName);
-							cls.addField(new CtField(propertyClass, fieldPropertyName, cls), fieldConstructor);
+//							String fieldConstructor = String.format("new %s()", propertyClassName);
+							cls.addField(new CtField(propertyClass, fieldPropertyName, cls));
 							log.info(String.format("Property '%s' added to '%s'", fieldPropertyName, className));
+							
+							for(CtConstructor constructor : cls.getDeclaredConstructors()) {
+								System.out.println("modifying constructor...");
+//								constructor.insertAfter("System.out.println(\"CONSTRUCT !\");");
+								System.out.println(String.format(INIT_PROPERTY, fieldPropertyName, propertyClassName, fieldName));
+								constructor.insertAfter(String.format(INIT_PROPERTY, fieldPropertyName, propertyClassName, fieldName));
+							}
 							
 							// Add an update of the property at the end of the setter
 							setter.insertAfter(String.format("%s.set($1);", fieldPropertyName));
@@ -100,6 +126,7 @@ public class DataFX {
 							log.warning(String.format("No property class found for the type '%s' of the field '%s'", field.getType().getName(), fieldName));
 						}
 					} catch(Exception e) {
+						e.printStackTrace();
 						continue;
 					}
 				}
